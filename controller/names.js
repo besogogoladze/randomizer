@@ -44,6 +44,16 @@ export const pickRandomName = async (req, res) => {
       });
     }
 
+    const secretKey = (length = 8) => {
+      const chars =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      let result = "";
+      for (let i = 0; i < length; i++) {
+        result += chars[Math.floor(Math.random() * chars.length)];
+      }
+      return result;
+    };
+
     let doc = await Names.findOne();
     if (!doc) doc = await Names.create({});
 
@@ -55,6 +65,7 @@ export const pickRandomName = async (req, res) => {
     }
 
     let random;
+
     do {
       random = RANDOM_NAMES[Math.floor(Math.random() * RANDOM_NAMES.length)];
     } while (
@@ -64,7 +75,7 @@ export const pickRandomName = async (req, res) => {
 
     const target = doc.names.find((n) => n.name === userName);
     if (target) target.chose = random;
-    else doc.names.push({ name: userName, chose: random });
+    else doc.names.push({ name: { userName, secretKey }, chose: random });
 
     await doc.save();
 

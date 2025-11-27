@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const nameFieldSchema = new mongoose.Schema({
-  name: { type: String, default: "" },
+  name: { type: String, default: "", secretKey: String },
   chose: { type: String, default: "" },
 });
 
