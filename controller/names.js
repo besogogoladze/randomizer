@@ -57,7 +57,10 @@ export const pickRandomName = async (req, res) => {
     let random;
     do {
       random = RANDOM_NAMES[Math.floor(Math.random() * RANDOM_NAMES.length)];
-    } while (doc.names.find((n) => n.chose === random) || random === userName);
+    } while (
+      doc.names.find((n) => n.chose === random) ||
+      random.toLowerCase() === userName.toLowerCase()
+    );
 
     const target = doc.names.find((n) => n.name === userName);
     if (target) target.chose = random;
