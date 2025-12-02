@@ -34,4 +34,6 @@ app.use((req, res, next) => {
 
 app.use("/names", router);
 
-export default app;
+// export default app;
+
+app.listen(5000, () => console.log("listening..."));
